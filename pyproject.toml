@@ -1,0 +1,90 @@
+[build-system]
+requires = ["setuptools>=69", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "trader"
+version = "0.1.0"
+description = "A pre-registered falsification campaign across ~50 trading-strategy families."
+requires-python = ">=3.11"
+dependencies = [
+  "pandas>=2.2,<3.0",
+]
+
+[project.optional-dependencies]
+# The research campaign: install with `pip install -e ".[trading,dev]"`.
+# Web-news scraping (`[scraping]`) is optional and pulls a heavy, git-pinned
+# fetcher; only the news-catalyst pipeline needs it.
+scraping = [
+  "browser-cookie3==0.20.1",
+  "scrapling[fetchers] @ git+https://github.com/D4Vinci/Scrapling.git@ed008efcf77e13048192579d465b0ed2192d1925",
+]
+dev = [
+  "ruff>=0.11",
+  "pytest>=9.0",
+  "pytest-asyncio>=0.24",
+  "mypy>=2.0",
+  "pip-audit>=2.10",
+]
+# Trading-pipeline dependencies. Install with `pip install -e ".[trading]"`.
+# Sports-only contributors don't need these.
+trading = [
+  "alpaca-py>=0.43,<1.0",
+  "litellm>=1.85,<2.0",
+  "anthropic>=0.50,<1.0",
+  "fredapi>=0.5.2,<0.6",
+  "exchange-calendars>=4.13,<5.0",
+  "finnhub-python>=2.4,<3.0",
+  "apscheduler>=3.11,<4.0",
+  "pydantic>=2.13,<3.0",
+  "pydantic-settings>=2.14,<3.0",
+  "structlog>=25.0,<26.0",
+  "httpx>=0.27,<1.0",
+  "numpy>=1.26,<3.0",
+  "quantstats>=0.0.81",
+  # yfinance is imported by adapters/news/yahoo.py:87 and is required
+  # for the Alpaca-data fallback path. Was previously undeclared and
+  # relied on a transitive pull from quantstats — Codex sweep #10
+  # flagged this 2026-05-20.
+  "yfinance>=0.2,<1.0",
+  # ThetaData's Python client currently requires Python 3.12+. The marker keeps
+  # Python 3.11 installs valid while enabling the options intraday research path.
+  "thetadata>=1.0.5,<2.0; python_version >= '3.12'",
+  # DuckDB powers the Parquet "data lake" export/read path for sharing the
+  # options firehose between collaborators (scripts/export_parquet_lake.py,
+  # trader/storage/parquet_lake.py). See docs/data-sharing.md.
+  "duckdb>=1.1,<2.0",
+]
+dashboard = [
+  "streamlit>=1.50,<2.0",
+  "streamlit-autorefresh>=1.0,<2.0",
+  "yfinance>=0.2,<2.0",
+]
+
+[project.scripts]
+trader-daily = "trader.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.ruff]
+line-length = 120
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP", "SIM", "RUF"]
+ignore = ["E501"]
+
+[tool.ruff.lint.per-file-ignores]
+# Deflated-Sharpe math is documented with the paper's actual notation
+# (γ, Φ, ·, ⁻¹, …); RUF002/RUF001 flag these as "ambiguous unicode" but they
+# are intentional and load-bearing for readers checking the formula.
+"src/trader/scoring/deflated_sharpe.py" = ["RUF002"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+markers = [
+    "integration: hits real external APIs (skipped by default; needs paper keys)",
+]
+addopts = "-m 'not integration'"

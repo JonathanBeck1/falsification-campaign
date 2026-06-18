@@ -1,0 +1,18 @@
+[alpaca]
+enabled = false
+base_url = "https://paper-api.alpaca.markets"
+data_plan = "market-data-plan-name"
+
+[apify_x]
+enabled = false
+actor = "configured-in-apify"
+
+[news]
+enabled = false
+rss_feeds = []
+publishers = []
+
+[sec]
+enabled = false
+user_agent = "Trader research contact@example.com"
+

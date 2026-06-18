@@ -1,0 +1,90 @@
+#!/usr/bin/env python
+"""Pre-2010 OOS extension: re-mine the classical strategy families against
+SPY's full history (1993→2026) with an IS=1993-2009 / OOS=2010-2025 split.
+
+Tests a different question than the main lab: would any of these signals have
+worked in the older regime? If a strategy is genuinely *real*, we'd expect at
+least some sign-stability across the regime change. None doing so is more
+evidence the space is dead.
+
+Same deflated-Sharpe + OOS gate as the main lab. Output mirrors strategy_lab.json
+so the dashboard's lab-discovery code picks it up automatically.
+"""
+
+from __future__ import annotations
+
+import json
+import sys
+from dataclasses import asdict
+from datetime import datetime
+from pathlib import Path
+
+import pandas as pd
+import structlog
+
+ROOT = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(ROOT / "src"))
+
+from trader.mining.lab import LabReport, format_report, run_lab  # noqa: E402
+from trader.mining.strategies import generate_variants  # noqa: E402
+
+structlog.configure(wrapper_class=structlog.make_filtering_bound_logger(30))
+
+# Tickers with deep history (>= 1995 ideally). SPY back to 1993; DIA 1998.
+BASKET = ["SPY", "DIA", "EWJ"]
+START, END, SPLIT = "1993-01-29", "2026-06-06", "2010-01-01"
+REPORT = ROOT / "research" / "pre2010_lab_report.md"
+JSON_OUT = ROOT / "output" / "catalysts" / "pre2010_lab.json"
+
+
+def fetch(ticker: str) -> pd.Series | None:
+    import yfinance as yf
+    df = yf.download(ticker, start=START, end=END, auto_adjust=True, progress=False, threads=False)
+    if df is None or df.empty:
+        return None
+    if isinstance(df.columns, pd.MultiIndex):
+        df = df.droplevel(axis=1, level=1)
+    s = df["Close"].dropna()
+    s.index = pd.DatetimeIndex(s.index)
+    s.name = ticker
+    return s if len(s) else None
+
+
+def _write_json(rep: LabReport) -> None:
+    JSON_OUT.parent.mkdir(parents=True, exist_ok=True)
+    payload = {
+        "run_at": datetime.now().isoformat(timespec="seconds"),
+        "n_trials": rep.n_trials,
+        "split": rep.split,
+        "expected_false_winners_p05": round(rep.expected_false_winners_p05, 1),
+        "best": asdict(rep.best) if rep.best else None,
+        "best_dsr": rep.best_dsr,
+        "best_deflated_sharpe": rep.best_deflated_sharpe,
+        "n_survivors": len(rep.oos_confirmed),
+        "survivors": [asdict(s) for s in rep.oos_confirmed],
+        "leaderboard": [asdict(s) for s in rep.leaderboard],
+    }
+    JSON_OUT.write_text(json.dumps(payload, indent=2))
+
+
+def main() -> int:
+    prices: dict[str, pd.Series] = {}
+    for t in BASKET:
+        s = fetch(t)
+        if s is not None:
+            prices[t] = s
+            print(f"  {t}: {len(s)} days ({s.index[0].date()} -> {s.index[-1].date()})", flush=True)
+        else:
+            print(f"  {t}: NO DATA", flush=True)
+    variants = list(generate_variants(prices))
+    print(f"\nGenerated {len(variants)} variants. Running lab (IS=1993-2009, OOS=2010-2025)...", flush=True)
+    rep = run_lab(variants, split=SPLIT)
+    REPORT.write_text(format_report(rep))
+    _write_json(rep)
+    print("\n" + format_report(rep))
+    print(f"Report: {REPORT}\nJSON: {JSON_OUT}")
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

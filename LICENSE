@@ -1,0 +1,43 @@
+MIT License
+
+Copyright (c) 2026 Jonathan Beck
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+---
+
+NOTE ON SCOPE OF THIS LICENSE
+=============================
+
+This MIT license covers the SOURCE CODE in this repository only.
+
+- The research write-ups (research/PAPER_DRAFT.md, the decision records under
+  brain/decisions/ and research/*_decision.md, and the campaign registry) are
+  the authors' own analysis and are shared for reading/citation; attribution is
+  appreciated.
+
+- This repository does NOT include, and does not relicense, any third-party
+  market data. The option-quote lakes are derived from ThetaData (a licensed
+  vendor) and are excluded from distribution; CEF universe data derived from
+  Tiingo is likewise excluded. See docs/DATA.md for provenance
+  and how to obtain or recreate the inputs yourself under those vendors' terms.
+
+- Nothing here is investment advice. The campaign's conclusion is that no
+  deployable edge survived testing on retail-accessible data; the code and
+  results are provided for research and educational purposes only.
