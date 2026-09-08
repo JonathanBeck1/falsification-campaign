@@ -48,7 +48,7 @@ The value here is not an edge. It is three durable things:
 
 ### Pre-registration
 
-The hypothesis, cohort definition, measurement windows, the sample-size (N) arithmetic, and the explicit kill criteria are written and committed **before any result exists** — removing the single largest source of overfitting: specification search after seeing the data. Every test has a committed `research/*_preregistration.md`.
+The hypothesis, cohort definition, measurement windows, the sample-size (N) arithmetic, and the explicit kill criteria are written and committed **before any result exists** — removing the single largest source of overfitting: specification search after seeing the data. Every test has a `research/*_preregistration.md`. This repository is a single published snapshot, so its git history does not demonstrate that ordering. See [PROVENANCE.md](PROVENANCE.md).
 
 ### The universal gate (8 steps, no exceptions)
 
@@ -169,7 +169,7 @@ Nothing here should be the final unchecked authority for live trades. Do your ow
 |---|---|
 | [`research/PAPER_DRAFT.md`](research/PAPER_DRAFT.md) | **The full paper** — abstract, methodology, taxonomy, results, conclusion. Start here. |
 | [`research/CAMPAIGN_SCOREBOARD.md`](research/CAMPAIGN_SCOREBOARD.md) | Auto-generated master results table (the paper's §7). |
-| `research/*_preregistration.md` | Per-test pre-registrations (hypothesis, cohort, windows, N, kill criteria) — committed *before* results. |
+| `research/*_preregistration.md` | Per-test pre-registrations (hypothesis, cohort, windows, N, kill criteria), written *before* results. Ordering is not demonstrable from this snapshot; see `PROVENANCE.md`. |
 | `research/*_decision.md` | Per-test decision records — verdict, load-bearing numbers, artifact class. |
 | [`brain/30_campaign_findings.md`](brain/30_campaign_findings.md) | The consolidated narrative + original 7-class artifact taxonomy. |
 | [`brain/34_master_test_registry.md`](brain/34_master_test_registry.md) | The 51-test registry / table of contents — the source of truth the scoreboard is built from. |
