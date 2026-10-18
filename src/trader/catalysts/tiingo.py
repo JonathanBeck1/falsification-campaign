@@ -121,6 +121,15 @@ def parse_prices(rows: object, ticker: str) -> pd.Series | None:
     return series if not series.empty else None
 
 
+def parse_raw_close(rows: object, ticker: str) -> pd.Series | None:
+    """PURE: ``parse_prices`` on raw ``close`` only; ``adjClose`` is back-adjusted for distributions, skewing price/NAV."""
+
+    if not isinstance(rows, list):
+        return None
+    close_only = [{"date": r.get("date"), "close": r.get("close")} for r in rows if isinstance(r, dict)]
+    return parse_prices(close_only, ticker)
+
+
 def fetch_daily(
     ticker: str,
     start: date,
