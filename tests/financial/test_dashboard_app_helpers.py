@@ -6,6 +6,14 @@ from pathlib import Path
 from types import ModuleType
 from typing import Any
 
+import pytest
+
+_DASHBOARD_APP = Path(__file__).resolve().parents[2] / "apps" / "dashboard.py"
+
+pytestmark = pytest.mark.skipif(
+    not _DASHBOARD_APP.exists(), reason="apps/dashboard.py (Streamlit app) is not included in this repo"
+)
+
 
 class _FakeColumn:
     def __enter__(self) -> _FakeColumn:
@@ -70,8 +78,7 @@ class _FakeStreamlit(ModuleType):
 def _load_dashboard_app(monkeypatch) -> tuple[ModuleType, _FakeStreamlit]:
     fake_streamlit = _FakeStreamlit()
     monkeypatch.setitem(sys.modules, "streamlit", fake_streamlit)
-    module_path = Path(__file__).resolve().parents[2] / "apps" / "dashboard.py"
-    spec = importlib.util.spec_from_file_location("dashboard_app_for_tests", module_path)
+    spec = importlib.util.spec_from_file_location("dashboard_app_for_tests", _DASHBOARD_APP)
     assert spec is not None
     assert spec.loader is not None
     module = importlib.util.module_from_spec(spec)
