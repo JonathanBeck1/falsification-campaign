@@ -83,6 +83,11 @@ Status legend: ✅ done · 🔄 in-flight · ⬜ planned. Data: 💾 owned · �
 - ⬜ **T51** LLM news-interpretation predictive test. *Mech: reasoning-model
   interpretation on names the fast money ignores; the only "news" angle not
   already dead. Low prior; hindsight-leak risk severe.*
+- ⬜ **T52** Stocks-in-Play 5-min opening-range breakout (Zarattini–Barbon–Aziz
+  2024 replication + news/context diagnostics). *Mech: catalyst-driven intraday
+  flow persists; the published skeleton of discretionary momentum day trading.
+  Pre-registered 2026-11-06 (`research/stocks_in_play_orb_preregistration.md`).
+  Prior: friction-scale kill (10%-ATR stop makes 1R ≈ 20–50 bps).*
 
 ## H. CEF / special situations (🆓 + Tiingo cheap)
 - ✅ **T13** CEF activist follow (Saba 13D) — *MARGINAL FAIL*.
@@ -109,7 +114,7 @@ Status legend: ✅ done · 🔄 in-flight · ⬜ planned. Data: 💾 owned · �
 
 ## Tally & data-cost rollup
 
-- **Tested: 40 · In-flight: 2 (T20, T21) · Planned: 8 · Merged: 1 → 51 total.**
+- **Tested: 40 · In-flight: 2 (T20, T21) · Planned: 9 · Merged: 1 → 52 total.**
   Authoritative count: `research/CAMPAIGN_SCOREBOARD.md` (regenerated from this
   file by `scripts/build_campaign_scoreboard.py`). **40 tested = 27 kill + 8
   no-edge + 3 marginal (T13 CEF activist, T15 CEF discount, T32 BTC VRP) + 2

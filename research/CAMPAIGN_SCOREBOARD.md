@@ -6,17 +6,17 @@ Auto-generated from `brain/34_master_test_registry.md` by `scripts/build_campaig
 
 | metric | count |
 |---|---:|
-| Total tests in registry | 51 |
+| Total tests in registry | 52 |
 | **Tested (verdict reached)** | **40** |
 | &nbsp;&nbsp;— Kills | 27 |
 | &nbsp;&nbsp;— No-edge | 8 |
 | &nbsp;&nbsp;— Marginal / split | 3 |
 | &nbsp;&nbsp;— Data-wall | 2 |
 | In-flight | 2 |
-| Planned | 8 |
+| Planned | 9 |
 | Merged / folded | 1 |
 
-**Headline:** 37/40 tested strategies reached a negative verdict (kill / no-edge / data-wall); 3 marginal (alive but not claimable). 2 in-flight, 8 planned.
+**Headline:** 37/40 tested strategies reached a negative verdict (kill / no-edge / data-wall); 3 marginal (alive but not claimable). 2 in-flight, 9 planned.
 
 ## By category
 
@@ -28,7 +28,7 @@ Auto-generated from `brain/34_master_test_registry.md` by `scripts/build_campaig
 | Crypto | 5 | 4 | 0 | 1 | 0 | 0 | 0 |
 | Futures | 0 | 0 | 0 | 0 | 0 | 0 | 4 |
 | Equity events & structural flow | 11 | 9 | 1 | 0 | 1 | 0 | 1 |
-| Catalyst / news | 2 | 2 | 0 | 0 | 0 | 0 | 1 |
+| Catalyst / news | 2 | 2 | 0 | 0 | 0 | 0 | 2 |
 | CEF / special situations | 3 | 1 | 0 | 2 | 0 | 1 | 0 |
 | Cross-sectional / multi-asset / macro | 5 | 2 | 3 | 0 | 0 | 0 | 0 |
 | Seasonality / calendar | 4 | 4 | 0 | 0 | 0 | 0 | 0 |
@@ -88,4 +88,5 @@ Auto-generated from `brain/34_master_test_registry.md` by `scripts/build_campaig
 | T49 | Seasonality / calendar | Sell-in-May / Halloween indicator | KILL | KILL: winter−summer +0.48%/mo but t=1.12 (noise); seasonal Sharpe 0.68 < buy-and-hold 0.77 — lower drawdown is exposure reduction (50% in cash), NOT alpha. Exp… |
 | T50 | Seasonality / calendar | Day-of-week / pre-holiday effects | KILL | KILL both: Monday effect gone & sign-reversed (+0.054%/day, t=0.22); pre-holiday +5.3bps gross but t=0.93 < placebo 1.94, cost-eaten. Decayed + friction-scale… |
 | T51 | Catalyst / news | LLM news-interpretation predictive test | PLANNED | Mech: reasoning-model interpretation on names the fast money ignores; the only "news" angle not already dead. Low prior; hindsight-leak risk severe. |
+| T52 | Catalyst / news | Stocks-in-Play 5-min opening-range breakout (Zarattini–Barbon–Aziz 20… | PLANNED | Mech: catalyst-driven intraday flow persists; the published skeleton of discretionary momentum day trading. Pre-registered 2026-11-06 (`research/stocks_in_play… |
 
